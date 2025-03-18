@@ -35,7 +35,7 @@ class View(object):
         self.lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         self.__menu_lingua = ft.Dropdown(label="Select language", options=[ft.dropdown.Option("english"), ft.dropdown.Option("italian"), ft.dropdown.Option("spanish")], width=1000)
         row1 = ft.Row(controls=[self.__menu_lingua], alignment=ft.MainAxisAlignment.START) #adattare la dimensione alla finestra
-        self.__tipo_ricerca = ft.Dropdown(label="Search Modality", options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomy")], width=690)
+        self.__tipo_ricerca = ft.Dropdown(label="Search Modality", options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomic")], width=690)
         self.frase = ft.TextField(label="Add your sentence here")
 
         def handleFunction(e):
