@@ -8,6 +8,29 @@ class SpellChecker:
         self._multiDic = md.MultiDictionary()
         self._view = view
 
+
+    def handleSpellCheck(self, txtIn, language, modality):
+        if not (language == "english" or language == "italian" or language == "spanish"):
+            self._view.lv.controls.append(ft.Text(value="Errore: non hai selezionato una lingua", color="red"))
+            self._view.page.add(self._view.lv)
+            return
+        if not (modality == "Default" or modality == "Linear" or modality == "Dichotomic"):
+            self._view.lv.controls.append(ft.Text(value="Errore: non hai selezionato una modalità di ricerca", color="red"))
+            self._view.page.add(self._view.lv)
+            return
+        if txtIn == "":
+            self._view.lv.controls.append(ft.Text(value="Errore: non hai inserito una frase", color="red"))
+            self._view.page.add(self._view.lv)
+            return
+        self._view.lv.controls.append(ft.Text(value=f"Frase inserita: {txtIn}"))
+        self._view.page.add(self._view.lv)
+        if self.handleSentence(txtIn, language, modality) != None:
+            paroleErrate, tempo = self.handleSentence(txtIn, language, modality)
+            self._view.lv.controls.append(ft.Text(value=f"Parole errate: {paroleErrate}", color="green"))
+            self._view.lv.controls.append(ft.Text(value=f"Tempo richiesto dalla ricerca: {tempo}", color="green"))
+            self._view.frase.value = ""
+            self._view.page.add(self._view.lv)
+
     def handleSentence(self, txtIn, language, modality):
         txtIn = replaceChars(txtIn.lower())
 

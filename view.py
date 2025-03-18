@@ -12,8 +12,13 @@ class View(object):
         # UI elements
         self.__title = None
         self.__theme_switch = None
-
         # define the UI elements and populate the page
+        self.__txtOut = None
+        self.__bottone_spell = None
+        self.frase = None
+        self.__tipo_ricerca = None
+        self.__menu_lingua = None
+        self.lv = None
 
     def add_content(self):
         """Function that creates and adds the visual elements to the page. It also updates
@@ -27,10 +32,23 @@ class View(object):
         )
 
         # Add your stuff here
+        self.lv = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+        self.__menu_lingua = ft.Dropdown(label="Select language", options=[ft.dropdown.Option("english"), ft.dropdown.Option("italian"), ft.dropdown.Option("spanish")], width=1000)
+        row1 = ft.Row(controls=[self.__menu_lingua], alignment=ft.MainAxisAlignment.START) #adattare la dimensione alla finestra
+        self.__tipo_ricerca = ft.Dropdown(label="Search Modality", options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomy")], width=690)
+        self.frase = ft.TextField(label="Add your sentence here")
 
-        self.page.add([])
+        def handleFunction(e):
+            self.__controller.handleSpellCheck(self.frase.value, self.__menu_lingua.value, self.__tipo_ricerca.value)
+
+        self.__bottone_spell = ft.ElevatedButton(text="Spell check", color="lightblue", on_click=handleFunction)
+        row2 = ft.Row(controls=[self.__tipo_ricerca, self.frase, self.__bottone_spell], alignment=ft.MainAxisAlignment.START) # adattare la dimensione alla finestra
+
+        self.page.add(row1, row2)
 
         self.page.update()
+
+
 
     def update(self):
         self.page.update()
